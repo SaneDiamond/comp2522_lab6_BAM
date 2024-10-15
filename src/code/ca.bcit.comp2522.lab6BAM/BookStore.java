@@ -8,6 +8,7 @@ public class BookStore<T extends Literature> {
     private static final double RATIO_TO_PERCENTAGE = 100.0;
     private static final int CONTAINS_NOTHING = 0;
     private static final int END_YEAR = 9;
+    private static final int TOTAL_LENGTH = 0;
 
     private final String name;
     private final List<T> items;
@@ -18,6 +19,23 @@ public class BookStore<T extends Literature> {
         this.name = name;
         this.items = new ArrayList<>();
         this.itemMap = new HashMap<>();
+    }
+    // Static nested class
+    static class BookStoreInfo {
+        public void displayInfo(final String storeName, final int itemCount) {
+            System.out.println("BookStore: " + storeName + ", Items: " + itemCount);
+        }
+    }
+    private List<T> items = new ArrayList<>();
+    // Inner class
+    class NovelStatistics {
+        public double averageTitleLength() {
+            final int totalLength = TOTAL_LENGTH;
+            for (final T item : items) {
+                totalLength += item.getTitle().length();
+            }
+            return (double) totalLength / items.size();
+        }
     }
 
     /**
