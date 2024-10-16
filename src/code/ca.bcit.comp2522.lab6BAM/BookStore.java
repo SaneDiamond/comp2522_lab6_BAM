@@ -33,7 +33,7 @@ public class BookStore<T extends Literature> {
      * provides functionality for maintaining a list of items and calculating statistical data,
      * such as the average title length of those items.
      *
-     * @param <T> the type of items in the list, which must provide a {@code getTitle()} method
+     * @param <T> the type of items in the list
      */
     class NovelStatistics {
         final private List<T> items;
