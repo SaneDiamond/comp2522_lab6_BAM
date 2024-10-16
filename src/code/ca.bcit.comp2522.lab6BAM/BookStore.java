@@ -2,6 +2,7 @@ package ca.bcit.comp2522.lab6BAM;
 
 import java.util.*;
 
+// Ben: Where da javadoc go ( •_•)
 public class BookStore<T extends Literature> {
     private static final int MIN_AMOUNT_BOOKS = 0;
     private static final double ZERO_CHANCE = 0.0;
@@ -18,6 +19,8 @@ public class BookStore<T extends Literature> {
         this.name = name;
         this.items = new ArrayList<>();
         this.itemMap = new HashMap<>();
+
+        //Ben: Where da book population go ( •_•)( •_•)( •_•)( •_•)( •_•)( •_•)( •_•)
     }
 
     /**
@@ -95,6 +98,11 @@ public class BookStore<T extends Literature> {
      * @param keyword The keyword to search for in titles.
      */
     public void printBookTitle(final String keyword) {
+        // Ben: added Validation
+        if (keyword == null) {
+            throw new IllegalArgumentException("Keyword cannot be null");
+        }
+
         items.forEach((item) -> {
             if(item.getTitle().contains(keyword)) {
                 System.out.println(item.getTitle());
@@ -113,6 +121,7 @@ public class BookStore<T extends Literature> {
         itemsCopy.sort(Comparator.comparing(T::getTitle, String::compareToIgnoreCase));
 
         itemsCopy.forEach((item) -> item.getTitle().toUpperCase());
+        // Ben: am i buggin or mfw no printing ( •_•)
     }
 
     /**
@@ -182,13 +191,17 @@ public class BookStore<T extends Literature> {
      * @param endYear   End of the interval (inclusive).
      * @return The percentage of books published in the interval.
      */
-    public double whichPercentWrittenBetween(final int startYear, final int endYear) {
+    public double whichPercentWrittenBetween(final int startYear,
+                                             final int endYear) {
+
+        // A larger start year than end year is invalid, chance is ZERO_CHANCE
         if (startYear > endYear) {
             return ZERO_CHANCE;
         }
 
         final int totalBooks;
         totalBooks = items.size();
+        // Ben: ( •_•)
         if (totalBooks == 0) {
             return ZERO_CHANCE;
         }
@@ -223,7 +236,8 @@ public class BookStore<T extends Literature> {
                 .append(decade)
                 .append("s:\n");
 
-        boolean booksFound = false;
+        boolean booksFound;
+        booksFound = false;
 
         for (final T item : items) {
             if (item instanceof Novel novel) {
@@ -239,11 +253,9 @@ public class BookStore<T extends Literature> {
                 }
             }
         }
-
         if (!booksFound) {
             sb.append("No books in this decade.\n");
         }
-
         System.out.println(sb.toString());
     }
 
@@ -253,7 +265,9 @@ public class BookStore<T extends Literature> {
      * @return The oldest book, or null if the store is empty.
      */
     public T getOldestBook() {
+        // Ben: mfw no final ( •_•)
         T oldestItem;
+        // Ben: mfw no final ( •_•)
         int oldestYear;
 
         oldestItem = null;
