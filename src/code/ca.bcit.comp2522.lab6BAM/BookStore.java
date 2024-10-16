@@ -9,7 +9,7 @@ public class BookStore<T extends Literature> {
     private static final double RATIO_TO_PERCENTAGE = 100.0;
     private static final int CONTAINS_NOTHING = 0;
     private static final int END_YEAR = 9;
-    private static final int EMPTY_total_LENGTH = 0;
+    private static final int EMPTY_TOTAL_LENGTH = 0;
 
     private final String name;
     private final List<T> items;
@@ -32,23 +32,25 @@ public class BookStore<T extends Literature> {
             System.out.println("BookStore: " + storeName + ", Items: " + itemCount);
         }
     }
+
     /**
      * provides functionality for maintaining a list of items and calculating statistical data,
      * such as the average title length of those items.
-     *
-     * @param <T> the type of items in the list
      */
     class NovelStatistics {
-        final private List<T> items;
-        final int totalLength;
-
-        items = new ArrayList<>();
-        totalLength = EMPTY_TOTAL_LENGTH;
-
         public double averageTitleLength() {
-            for (T item : items) {
+            int totalLength;
+
+            totalLength = EMPTY_TOTAL_LENGTH;
+
+            for (final T item : items) {
                 totalLength += item.getTitle().length();
             }
+
+            if(items.isEmpty()) {
+                return EMPTY_TOTAL_LENGTH;
+            }
+
             return (double) totalLength / items.size();
         }
     }
@@ -269,9 +271,7 @@ public class BookStore<T extends Literature> {
      * @return The oldest book, or null if the store is empty.
      */
     public T getOldestBook() {
-        // Ben: mfw no final ( •_•)
         T oldestItem;
-        // Ben: mfw no final ( •_•)
         int oldestYear;
 
         oldestItem = null;
@@ -329,7 +329,7 @@ public class BookStore<T extends Literature> {
     private void printSortedItems() {
         System.out.println("\nItems sorted by title (excluding titles containing \"the\"):");
         // Ben: mfw no final ( •_•)
-        List<String> sortedTitles;
+        final List<String> sortedTitles;
         // Ben: mfw no final ( •_•)
         sortedTitles = new ArrayList<>();
 
