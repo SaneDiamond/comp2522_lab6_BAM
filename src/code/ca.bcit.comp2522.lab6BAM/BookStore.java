@@ -14,13 +14,11 @@ public class BookStore<T extends Literature> {
     private final List<T> items;
     private final Map<String, List<T>> itemMap;
 
-    // Constructor
     public BookStore(final String name) {
         this.name = name;
         this.items = new ArrayList<>();
         this.itemMap = new HashMap<>();
     }
-    // Static nested class
     static class BookStoreInfo {
         public void displayInfo(final String storeName, final int itemCount) {
             System.out.println("BookStore: " + storeName + ", Items: " + itemCount);
@@ -58,7 +56,7 @@ public class BookStore<T extends Literature> {
 
         // For items that have an author (e.g., Novel), add to the map
         if (item instanceof Novel novel) {
-            String author;
+            final String author;
             author = novel.getAuthorName();
             itemMap.computeIfAbsent(author, k -> new ArrayList<>()).add(item);
         }
@@ -68,7 +66,7 @@ public class BookStore<T extends Literature> {
      * Prints the titles of all items in the bookstore.
      */
     public void printItems() {
-        for (T item : items) {
+        for (final T item : items) {
             System.out.println(item.getTitle());
         }
     }
@@ -77,8 +75,9 @@ public class BookStore<T extends Literature> {
      * Prints the title of all books in the bookstore in uppercase.
      */
     public void printAllTitles() {
-        for (T item : items) {
-            final String title = item.getTitle();
+        for (final T item : items) {
+            final String title;
+            title = item.getTitle();
             System.out.println(title.toUpperCase());
         }
     }
@@ -100,7 +99,7 @@ public class BookStore<T extends Literature> {
      * Prints the titles of all books in alphabetical order.
      */
     public void printTitlesInAlphaOrder() {
-        List<T> itemsCopy;
+        final List<T> itemsCopy;
         itemsCopy = new ArrayList<>(items);
 
         // Sort based on title
@@ -115,9 +114,10 @@ public class BookStore<T extends Literature> {
     public void getLongest() {
         String longestTitle = "";
 
-        for (T item : items) {
+        for (final T item : items) {
             if (item != null) {
-                final String title = item.getTitle();
+                final String title;
+                title = item.getTitle();
                 if (title.length() > longestTitle.length()) {
                     longestTitle = title;
                 }
@@ -158,8 +158,9 @@ public class BookStore<T extends Literature> {
             throw new IllegalArgumentException("Word cannot be blank.");
         }
 
-        int count = CONTAINS_NOTHING;
-        for (T item : items) {
+        int count;
+        count = CONTAINS_NOTHING;
+        for (final T item : items) {
             if (item.getTitle().toLowerCase().contains(word.toLowerCase())) {
                 count++;
             }
@@ -179,7 +180,8 @@ public class BookStore<T extends Literature> {
             return ZERO_CHANCE;
         }
 
-        final int totalBooks = items.size();
+        final int totalBooks;
+        totalBooks = items.size();
         if (totalBooks == 0) {
             return ZERO_CHANCE;
         }
@@ -188,7 +190,8 @@ public class BookStore<T extends Literature> {
 
         for (final T item : items) {
             if (item instanceof Novel novel) {
-                int year = novel.getYearPublished();
+                final int year;
+                year = novel.getYearPublished();
                 if (year >= startYear && year <= endYear) {
                     booksInRange++;
                 }
@@ -204,7 +207,7 @@ public class BookStore<T extends Literature> {
      * @param decade The starting year of the decade (e.g., 1990 for the 1990s).
      */
     public void printGroupByDecade(final int decade) {
-        final int endYear ;
+        final int endYear;
         endYear = decade + END_YEAR;
 
         final StringBuilder sb;
@@ -243,8 +246,11 @@ public class BookStore<T extends Literature> {
      * @return The oldest book, or null if the store is empty.
      */
     public T getOldestBook() {
-        T oldestItem = null;
-        int oldestYear = Integer.MAX_VALUE;
+        T oldestItem;
+        int oldestYear;
+
+        oldestItem = null;
+        oldestYear = Integer.MAX_VALUE;
 
         for (final T item : items) {
             if (item instanceof Novel novel) {
@@ -264,7 +270,7 @@ public class BookStore<T extends Literature> {
     private void printAllTitlesUsingIterator() {
         System.out.println("\nAll Titles in the BookStore:");
 
-        for (T item : items) {
+        for (final T item : items) {
             System.out.println(item.getTitle());
         }
     }
@@ -275,11 +281,15 @@ public class BookStore<T extends Literature> {
     private void removeItemsWithTitleContainingThe() {
         System.out.println("\nRemoving items with titles containing \"the\"...");
 
-        Iterator<T> iterator = items.iterator();
+        final Iterator<T> iterator;
+        iterator = items.iterator();
 
         while (iterator.hasNext()) {
-            T item = iterator.next();
-            final String title = item.getTitle();
+            final T item;
+            final String title;
+
+            item = iterator.next();
+            title = item.getTitle();
 
             if (title.toLowerCase().contains("the")) {
                 iterator.remove();
@@ -293,9 +303,10 @@ public class BookStore<T extends Literature> {
      */
     private void printSortedItems() {
         System.out.println("\nItems sorted by title (excluding titles containing \"the\"):");
-        List<String> sortedTitles = new ArrayList<>();
+        List<String> sortedTitles;
+        sortedTitles = new ArrayList<>();
 
-        for (T item : items) {
+        for (final T item : items) {
             if (!item.getTitle().toLowerCase().contains("the")) {
                 sortedTitles.add(item.getTitle());
             }
@@ -303,7 +314,7 @@ public class BookStore<T extends Literature> {
 
         sortedTitles.sort(String.CASE_INSENSITIVE_ORDER);
 
-        for (String title : sortedTitles) {
+        for (final String title : sortedTitles) {
             System.out.println(title);
         }
     }
@@ -315,9 +326,10 @@ public class BookStore<T extends Literature> {
      * @return A list of books with titles matching the specified length.
      */
     public List<T> getBooksThisLength(final int titleLength) {
-        final List<T> titles = new ArrayList<>();
+        final List<T> titles;
+        titles = new ArrayList<>();
 
-        for (T item : items) {
+        for (final T item : items) {
             if (item.getTitle().length() == titleLength) {
                 titles.add(item);
             }
@@ -336,19 +348,16 @@ public class BookStore<T extends Literature> {
 
     // Optional: Main method for testing
     public static void main(final String[] args) {
-        // Create a BookStore that can hold Literature items
         BookStore<Literature> store = new BookStore<>("Diverse Literature Collection");
 
-        // Add different types of literature to the store
         store.addItem(new Novel("War and Peace", "Leo Tolstoy", 1869));
         store.addItem(new ComicBook("Spider-Man"));
         store.addItem(new Magazine("National Geographic"));
 
-        // Print the titles of all items in the store
-        System.out.println("Printing all items in the store:");
-        store.printItems(); // Should print titles from different item types
 
-        // Additional demonstrations
+        System.out.println("Printing all items in the store:");
+        store.printItems();
+
         System.out.println("\nAll Titles in UPPERCASE:");
         store.printAllTitles();
 
