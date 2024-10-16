@@ -26,10 +26,17 @@ public class BookStore<T extends Literature> {
             System.out.println("BookStore: " + storeName + ", Items: " + itemCount);
         }
     }
-    private List<T> items = new ArrayList<>();
+
+    // Marcus: What is this for?
+//    private List<T> items = new ArrayList<>();
+
     // Inner class
     class NovelStatistics {
         public double averageTitleLength() {
+            // Marcus:
+            // - If this variable changes, then you can't put it as final
+            // - Separate instantiation and declaration
+            // - Don't use the name of the own variable as constant, it doesnt make sense
             final int totalLength = TOTAL_LENGTH;
             for (final T item : items) {
                 totalLength += item.getTitle().length();
@@ -82,32 +89,24 @@ public class BookStore<T extends Literature> {
      * @param keyword The keyword to search for in titles.
      */
     public void printBookTitle(final String keyword) {
-        if (keyword == null || keyword.isBlank()) {
-            throw new IllegalArgumentException("Keyword cannot be null or blank.");
-        }
-
-        for (T item : items) {
-            final String novelTitle = item.getTitle();
-            if (novelTitle != null && !novelTitle.isEmpty()) {
-                if (novelTitle.toLowerCase().contains(keyword.toLowerCase())) {
-                    System.out.println(item.getTitle());
-                }
+        items.forEach((item) -> {
+            if(item.getTitle().contains(keyword)) {
+                System.out.println(item.getTitle());
             }
-        }
+        });
     }
 
     /**
      * Prints the titles of all books in alphabetical order.
      */
     public void printTitlesInAlphaOrder() {
-        List<T> itemsCopy = new ArrayList<>(items);
+        List<T> itemsCopy;
+        itemsCopy = new ArrayList<>(items);
 
         // Sort based on title
-        itemsCopy.sort(Comparator.comparing(Literature::getTitle, String.CASE_INSENSITIVE_ORDER));
+        itemsCopy.sort(Comparator.comparing(T::getTitle, String::compareToIgnoreCase));
 
-        for (T item : itemsCopy) {
-            System.out.println(item.getTitle().toUpperCase());
-        }
+        itemsCopy.forEach((item) -> item.getTitle().toUpperCase());
     }
 
     /**
