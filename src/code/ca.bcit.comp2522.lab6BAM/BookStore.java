@@ -324,7 +324,9 @@ public class BookStore<T extends Literature> {
      */
     private void printSortedItems() {
         System.out.println("\nItems sorted by title (excluding titles containing \"the\"):");
+        // Ben: mfw no final ( •_•)
         List<String> sortedTitles;
+        // Ben: mfw no final ( •_•)
         sortedTitles = new ArrayList<>();
 
         for (final T item : items) {
