@@ -62,7 +62,7 @@ public class BookStore<T extends Literature> {
         if (item == null) {
             throw new IllegalArgumentException("Item cannot be null.");
         }
-        items.add(item) ;
+        items.add(item);
 
         // For items that have an author (e.g., Novel), add to the map
         if (item instanceof Novel novel) {
@@ -120,8 +120,12 @@ public class BookStore<T extends Literature> {
         // Sort based on title
         itemsCopy.sort(Comparator.comparing(T::getTitle, String::compareToIgnoreCase));
 
-        itemsCopy.forEach((item) -> item.getTitle().toUpperCase());
-        // Ben: am i buggin or mfw no printing ( •_•)
+        itemsCopy.forEach((item) -> {
+            final String title;
+            title = item.getTitle().toUpperCase();
+
+            System.out.println(title);
+        });
     }
 
     /**
