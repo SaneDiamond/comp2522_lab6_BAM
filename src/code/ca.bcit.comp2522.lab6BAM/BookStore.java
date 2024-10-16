@@ -8,7 +8,7 @@ public class BookStore<T extends Literature> {
     private static final double RATIO_TO_PERCENTAGE = 100.0;
     private static final int CONTAINS_NOTHING = 0;
     private static final int END_YEAR = 9;
-    private static final int TOTAL_LENGTH = 0;
+    private static final int EMPTY_total_LENGTH = 0;
 
     private final String name;
     private final List<T> items;
@@ -19,24 +19,31 @@ public class BookStore<T extends Literature> {
         this.items = new ArrayList<>();
         this.itemMap = new HashMap<>();
     }
+
+    /**
+     * provides a structure for representing and displaying information about a bookstore,
+     * such as its name and the number of items it holds.
+     */
     static class BookStoreInfo {
         public void displayInfo(final String storeName, final int itemCount) {
             System.out.println("BookStore: " + storeName + ", Items: " + itemCount);
         }
     }
-
-    // Marcus: What is this for?
-//    private List<T> items = new ArrayList<>();
-
-    // Inner class
+    /**
+     * provides functionality for maintaining a list of items and calculating statistical data,
+     * such as the average title length of those items.
+     *
+     * @param <T> the type of items in the list, which must provide a {@code getTitle()} method
+     */
     class NovelStatistics {
+        final private List<T> items;
+        final int totalLength;
+
+        items = new ArrayList<>();
+        totalLength = EMPTY_TOTAL_LENGTH;
+
         public double averageTitleLength() {
-            // Marcus:
-            // - If this variable changes, then you can't put it as final
-            // - Separate instantiation and declaration
-            // - Don't use the name of the own variable as constant, it doesnt make sense
-            final int totalLength = TOTAL_LENGTH;
-            for (final T item : items) {
+            for (T item : items) {
                 totalLength += item.getTitle().length();
             }
             return (double) totalLength / items.size();
