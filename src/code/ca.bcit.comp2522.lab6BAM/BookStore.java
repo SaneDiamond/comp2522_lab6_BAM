@@ -55,6 +55,7 @@ public class BookStore<T extends Literature> {
         }
     }
 
+
     /**
      * Adds an item to the bookstore.
      *
@@ -78,8 +79,11 @@ public class BookStore<T extends Literature> {
      * Prints the titles of all items in the bookstore.
      */
     public void printItems() {
+
         for (final T item : items) {
-            System.out.println(item.getTitle());
+            if (!(item == null)) {
+                System.out.println(item.getTitle());
+            }
         }
     }
 
@@ -90,7 +94,9 @@ public class BookStore<T extends Literature> {
         for (final T item : items) {
             final String title;
             title = item.getTitle();
-            System.out.println(title.toUpperCase());
+            if (!(title == null)) {
+                System.out.println(title.toUpperCase());
+            }
         }
     }
 
@@ -125,8 +131,9 @@ public class BookStore<T extends Literature> {
         itemsCopy.forEach((item) -> {
             final String title;
             title = item.getTitle().toUpperCase();
-
-            System.out.println(title);
+            if (!(title == null)) {
+                System.out.println(title);
+            }
         });
     }
 
@@ -156,9 +163,11 @@ public class BookStore<T extends Literature> {
      */
     public boolean isThereABookWrittenIn(final int yearPublished) {
         for (final T item : items) {
-            if (item instanceof Novel novel) {
-                if (novel.getYearPublished() == yearPublished) {
-                    return true;
+            if (!(item == null)) {
+                if (item instanceof Novel novel) {
+                    if (novel.getYearPublished() == yearPublished) {
+                        return true;
+                    }
                 }
             }
         }
@@ -207,23 +216,24 @@ public class BookStore<T extends Literature> {
 
         final int totalBooks;
         totalBooks = items.size();
-        // Ben: ( •_•)
-        if (totalBooks == 0) {
+        if (totalBooks == MIN_AMOUNT_BOOKS) {
             return ZERO_CHANCE;
         }
 
-        int booksInRange = MIN_AMOUNT_BOOKS;
+        int booksInRange;
+        booksInRange = MIN_AMOUNT_BOOKS;
 
         for (final T item : items) {
-            if (item instanceof Novel novel) {
-                final int year;
-                year = novel.getYearPublished();
-                if (year >= startYear && year <= endYear) {
-                    booksInRange++;
+            if (!(item == null)) {
+                if (item instanceof Novel novel) {
+                    final int year;
+                    year = novel.getYearPublished();
+                    if (year >= startYear && year <= endYear) {
+                        booksInRange++;
+                    }
                 }
             }
         }
-
         return ((double) booksInRange / totalBooks) * RATIO_TO_PERCENTAGE;
     }
 
@@ -246,16 +256,18 @@ public class BookStore<T extends Literature> {
         booksFound = false;
 
         for (final T item : items) {
-            if (item instanceof Novel novel) {
-                final int year;
-                year = novel.getYearPublished();
-                if (year >= decade && year <= endYear) {
-                    sb.append("- ")
-                            .append(item.getTitle())
-                            .append(" (")
-                            .append(year)
-                            .append(")\n");
-                    booksFound = true;
+            if (!(item == null)) {
+                if (item instanceof Novel novel) {
+                    final int year;
+                    year = novel.getYearPublished();
+                    if (year >= decade && year <= endYear) {
+                        sb.append("- ")
+                                .append(item.getTitle())
+                                .append(" (")
+                                .append(year)
+                                .append(")\n");
+                        booksFound = true;
+                    }
                 }
             }
         }
@@ -278,10 +290,12 @@ public class BookStore<T extends Literature> {
         oldestYear = Integer.MAX_VALUE;
 
         for (final T item : items) {
-            if (item instanceof Novel novel) {
-                if (novel.getYearPublished() < oldestYear) {
-                    oldestYear = novel.getYearPublished();
-                    oldestItem = item;
+            if (!(item == null)) {
+                if (item instanceof Novel novel) {
+                    if (novel.getYearPublished() < oldestYear) {
+                        oldestYear = novel.getYearPublished();
+                        oldestItem = item;
+                    }
                 }
             }
         }
@@ -296,7 +310,9 @@ public class BookStore<T extends Literature> {
         System.out.println("\nAll Titles in the BookStore:");
 
         for (final T item : items) {
-            System.out.println(item.getTitle());
+            if (!(item == null)) {
+                System.out.println(item.getTitle());
+            }
         }
     }
 
@@ -308,7 +324,6 @@ public class BookStore<T extends Literature> {
 
         final Iterator<T> iterator;
         iterator = items.iterator();
-
         while (iterator.hasNext()) {
             final T item;
             final String title;
@@ -328,14 +343,14 @@ public class BookStore<T extends Literature> {
      */
     private void printSortedItems() {
         System.out.println("\nItems sorted by title (excluding titles containing \"the\"):");
-        // Ben: mfw no final ( •_•)
         final List<String> sortedTitles;
-        // Ben: mfw no final ( •_•)
         sortedTitles = new ArrayList<>();
 
         for (final T item : items) {
-            if (!item.getTitle().toLowerCase().contains("the")) {
-                sortedTitles.add(item.getTitle());
+            if (!(item == null)) {
+                if (!item.getTitle().toLowerCase().contains("the")) {
+                    sortedTitles.add(item.getTitle());
+                }
             }
         }
 
@@ -357,8 +372,10 @@ public class BookStore<T extends Literature> {
         titles = new ArrayList<>();
 
         for (final T item : items) {
-            if (item.getTitle().length() == titleLength) {
-                titles.add(item);
+            if (!(item == null)) {
+                if (item.getTitle().length() == titleLength) {
+                    titles.add(item);
+                }
             }
         }
         return titles;
@@ -410,18 +427,8 @@ public class BookStore<T extends Literature> {
         System.out.println(store.whichPercentWrittenBetween(1800, 2000) + "%");
 
         System.out.println("\nOldest book:");
-        final Literature oldest;
-        oldest = store.getOldestBook();
-        if (oldest != null) {
-            if (oldest instanceof Novel oldestNovel) {
-                System.out.println(oldestNovel.getTitle() + " by " + oldestNovel.getAuthorName() + ", " +
-                        oldestNovel.getYearPublished());
-            } else {
-                System.out.println(oldest.getTitle());
-            }
-        } else {
-            System.out.println("No books available.");
-        }
+        System.out.println(store.getOldestBook());
+
 
         System.out.println("\nBooks with titles 15 characters long:");
         List<Literature> fifteenCharTitles = store.getBooksThisLength(15);
