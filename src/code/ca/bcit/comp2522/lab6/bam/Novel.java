@@ -1,13 +1,15 @@
-package ca.bcit.comp2522.lab6BAM;
+package ca.bcit.comp2522.lab6.bam;
 
 public class Novel
         extends Literature
         implements Comparable<Novel> {
+
     private final String title;
     private final String authorName;
     private final int yearPublished;
 
     public Novel(final String title, final String authorName, final int yearPublished) {
+
         this.title = title;
         this.authorName = authorName;
         this.yearPublished = yearPublished;
@@ -15,6 +17,7 @@ public class Novel
 
     @Override
     public String getTitle() {
+
         return title;
     }
 
@@ -38,6 +41,7 @@ public class Novel
      */
     @Override
     public int compareTo(final Novel novel) {
+
         final int comparison;
         comparison = title.compareTo(novel.title);
 

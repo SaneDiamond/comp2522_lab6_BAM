@@ -1,15 +1,18 @@
-package ca.bcit.comp2522.lab6BAM;
+package ca.bcit.comp2522.lab6.bam;
 
-public class ComicBook extends Literature{
+public class ComicBook extends Literature {
+
     private final String title;
 
     public ComicBook(final String title) {
+
         this.title = title;
     }
 
 
     @Override
     public String getTitle() {
+
         return title;
     }
 }
