@@ -1,6 +1,12 @@
 package ca.bcit.comp2522.lab6.bam;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Collections;
 
 /**
  * Represents a bookstore that holds a collection of literature items.
@@ -25,8 +31,7 @@ public class BookStore<T extends Literature> {
     private final Map<String, List<T>> itemMap;
 
     /**
-     * Constructs a new {
-     * @code BookStore} with the specified name.
+     * Constructs a new Bookstore object with the specified name.
      *
      * @param name the name of the bookstore
      */
@@ -49,7 +54,8 @@ public class BookStore<T extends Literature> {
          * @param storeName the name of the bookstore
          * @param itemCount the number of items in the bookstore
          */
-        public void displayInfo(final String storeName, final int itemCount) {
+        public void displayInfo(final String storeName,
+                                final int itemCount) {
 
             System.out.println("BookStore: " + storeName + ", Items: " + itemCount);
         }
@@ -68,7 +74,8 @@ public class BookStore<T extends Literature> {
          */
         public double averageTitleLength() {
 
-            int totalLength = EMPTY_TOTAL_LENGTH;
+            int totalLength;
+            totalLength = EMPTY_TOTAL_LENGTH;
 
             for (final T item : items) {
 
@@ -484,7 +491,6 @@ public class BookStore<T extends Literature> {
     public List<T> getBooksThisLength(final int titleLength) {
 
         final List<T> titles;
-
         titles = new ArrayList<>();
 
         if (items != null) {
